@@ -1,9 +1,6 @@
 import { StyleSheet, TextInput, View } from "react-native";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import { Pokemon } from "@/component/Pokemon/Pokemon";
-import { ErrorBoundary } from "react-error-boundary";
-import { Loading } from "@/component/Loading/Loading";
-import { Error } from "@/component/Error/Error";
 
 export default function Index() {
   const [name, setName] = useState<string | null>(null);
@@ -14,18 +11,11 @@ export default function Index() {
         placeholder="Ditto"
         autoComplete="off"
         autoCorrect={false}
-        onSubmitEditing={(e) => {
-          console.log(e);
-          setName(e.nativeEvent.text.trim().toLowerCase());
-        }}
+        onSubmitEditing={(e) =>
+          setName(e.nativeEvent.text.trim().toLowerCase())
+        }
       />
-      {name && (
-        <ErrorBoundary fallback={<Error />}>
-          <Suspense fallback={<Loading />}>
-            <Pokemon name={name} />
-          </Suspense>
-        </ErrorBoundary>
-      )}
+      {name && <Pokemon name={name} />}
     </View>
   );
 }
