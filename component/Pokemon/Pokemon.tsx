@@ -2,12 +2,16 @@ import React from "react";
 import { Text, View } from "react-native";
 import useSWR from "swr";
 
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export interface PokemonProps {
   name: string;
 }
 
 const fetcher = async (url: string) => {
   const res = await fetch(url);
+
+  await sleep(2000);
 
   if (!res.ok) {
     throw Error("An error occurred while fetching the data.");
